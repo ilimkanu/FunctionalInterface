@@ -21,13 +21,27 @@ public class Main {
         System.out.println("Введите макс. цену");
         Integer resultMaxPrice = scan.nextInt();
 
-        List<Laptops> laptopsFiltering = laptops.stream()
-                .filter(maker -> maker.getMaker().equals(resultMaker))
-                .filter(modelSeries -> modelSeries.getModelSeries().equals(resultModelSeries))
-                .filter(price -> price.getPrice() <= resultMaxPrice)
-                .collect(Collectors.toList());
+//        List<Laptops> laptopsFiltering = laptops.stream()
+//                .filter(maker -> maker.getMaker().equals(resultMaker))
+//                .filter(modelSeries -> modelSeries.getModelSeries().equals(resultModelSeries))
+//                .filter(price -> price.getPrice() <= resultMaxPrice)
+//                .collect(Collectors.toList());
+//
+//        System.out.println(laptopsFiltering);
 
-        System.out.println(laptopsFiltering);
+        Filterable makerFiltered = maker -> maker.getMaker().equals(resultMaker);
+        Filterable modelSeriesFiltered = modelSeries -> modelSeries.getModelSeries().equals(resultModelSeries);
+        Filterable priceFiltered = price -> price.getPrice() <= resultMaxPrice;
+
+        System.out.println("---------------------------");
+        System.out.println("Фильтрованные производители:");
+        laptops.forEach(maker -> System.out.println(makerFiltered.filter(maker)));
+        System.out.println("---------------------------");
+        System.out.println("Фильтрованные Серийные модели:");
+        laptops.forEach(modelSeries -> System.out.println(modelSeriesFiltered.filter(modelSeries)));
+        System.out.println("---------------------------");
+        System.out.println("Фильтрованные цены:");
+        laptops.forEach(price -> System.out.println(priceFiltered.filter(price)));
     }
 }
 @FunctionalInterface
